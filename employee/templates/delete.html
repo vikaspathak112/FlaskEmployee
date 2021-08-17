@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+	Delete Employee
+{% endblock %}
+
+{% block content %}
+	<br>
+   	{% if message == 'Employee Deleted Successfully' %}
+		<div class="alert alert-success" role="alert">
+  			{{message}}
+		</div>
+	{% elif message == 'Employee Does Not Exist' %}
+		<div class="alert alert-danger" role="alert">
+  			{{message}}
+		</div>
+	{% endif %}
+	<div class="container">
+		<form method="POST" class="form-register" style="color:white">
+			{{ form.hidden_tag() }}
+			<br>
+			{{ form.name.label() }}
+			{{ form.name(class="form-control", value=employee.name, disabled="true") }}
+		    <br>
+			{{ form.email.label() }}
+			{{ form.email(class="form-control", value=employee.email, disabled="true") }}
+		    <br>
+			{{ form.position.label() }}
+			{{ form.position(class="form-control", value=employee.position, disabled="true") }}
+			<br>
+			{{ form.dept.label() }}
+			{{ form.dept(class="form-control" , value=employee.dept, disabled="true")}}
+			<br>
+			{{ form.salary.label() }}
+			{{ form.salary(class="form-control", value=employee.salary, disabled="true") }}
+			<br>
+			{{ form.delete(class="btn btn-lg btn-block btn-success") }}
+		</form>
+	</div>
+{% endblock %}

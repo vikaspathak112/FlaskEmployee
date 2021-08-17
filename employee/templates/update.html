@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+	Update Employee
+{% endblock %}
+
+{% block content %}
+	<br>
+	<div class="container">
+		{% if message == 'Employee Updated Successfully' %}
+			<div class="alert alert-success" role="alert">
+  				{{message}}
+			</div>
+		{% endif %}
+		<form method="POST" class="form-register" style="color:white">
+			{{ form.hidden_tag() }}
+			<br>
+			{{ form.name.label() }}
+			{{ form.name(class="form-control", value=employee.name) }}
+		    <br>
+			{{ form.email.label() }}
+			{{ form.email(class="form-control", value=employee.email) }}
+		    <br>
+			{{ form.position.label() }}
+			{{ form.position(class="form-control", value=employee.position) }}
+			<br>
+			{{ form.dept.label() }}
+			{{ form.dept(class="form-control" , value=employee.dept)}}
+			<br>
+			{{ form.salary.label() }}
+			{{ form.salary(class="form-control", value=employee.salary) }}
+			<br>
+			{{ form.update(class="btn btn-lg btn-block btn-success") }}
+		</form>
+	</div>
+{% endblock %}

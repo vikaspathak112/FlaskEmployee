@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}
+	Home Page
+{% endblock %}
+
+{% block content %}
+	<h3 align = 'center'> Employee Details </h3>
+
+	<table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <!-- Your Columns HERE -->
+            <th scope="col">Employee ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Position</th>
+            <th scope="col">Department</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+        <!-- Your rows inside the table HERE: -->
+        {% for emp in employees.items %}
+          <tr>
+            <td>{{ emp.eid }}</td>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.email }}</td>
+            <td>{{ emp.position }}</td>
+            <td>{{ emp.dept }}</td>
+            <td>{{ emp.salary }}</td>
+            <td>
+              <a href="{{ url_for('update_page', eid = emp.eid) }}" class="btn btn-outline btn-info" role="button">Update</a>
+              <a href="{{ url_for('delete_page', eid = emp.eid) }}" class="btn btn-outline btn-danger" role="button" style = "margin-left: 5px">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-center">
+
+        <!-- Display left navigation button -->
+        <a href="{{url_for('home_page', page=employees.prev_num)}}" 
+        class="btn btn-outline-primary {% if not employees.has_prev %}disabled{% endif %}"> &laquo; </a>
+
+        <!-- Display current page number and neighbouring page numbers -->
+
+        
+        {% for page in range(1,employees.pages+1) %}
+            {% if page %}
+                {% if page == employees.page %}
+                    <a href="{{url_for('home_page', page=page)}}" class="btn btn-primary"> {{page}}</a>
+                {% else %}
+                    <a href="{{url_for('home_page', page=page)}}" class="btn btn-outline-primary"> {{page}}</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        <!-- Display right navigation button -->
+        <a href="{{url_for('home_page', page=employees.next_num)}}" 
+        class="btn btn-outline-primary {% if not employees.has_next %}disabled{% endif %}"> &raquo; </a>
+
+    </div>
+    <a href="{{ url_for('add_page') }}" class = "btn btn-lg btn-success" role="button" > Add an Employee </a>
+{% endblock %}

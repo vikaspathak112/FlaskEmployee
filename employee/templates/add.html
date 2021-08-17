@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+	Add Employee
+{% endblock %}
+
+{% block content %}
+	{% if message == 'Employee Added Successfully' %}
+		<div class="alert alert-success" role="alert">
+  			{{message}}
+		</div>
+	{% elif message.startswith('Employee with name') %}
+		<div class="alert alert-danger" role="alert">
+  			{{message}}
+		</div>
+	{% endif %}
+	<br>
+	<div class="container">
+		<form method="POST" class="form-register" style="color:white">
+			{{ form.hidden_tag() }}
+			<br>
+			{{ form.name.label() }}
+			{{ form.name(class="form-control", placeholder="Enter Name") }}
+		    <br>
+			{{ form.email.label() }}
+			{{ form.email(class="form-control", placeholder="Enter Email Address") }}
+		    <br>
+			{{ form.position.label() }}
+			{{ form.position(class="form-control", placeholder="Enter Position") }}
+			<br>
+			{{ form.dept.label() }}
+			{{ form.dept(class="form-control", placeholder="Enter Department") }}
+			<br>
+			{{ form.salary.label() }}
+			{{ form.salary(class="form-control", placeholder="Enter Salary") }}
+			<br>
+			{{ form.add(class="btn btn-lg btn-block btn-success") }}
+		</form>
+	</div>
+{% endblock %}
