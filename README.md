@@ -4,7 +4,7 @@ Learning Plan Exercise-(1) Part-(b)
 - Implement CRUD(Create, Read, Update, Delete) on employee table using Flask and SQLAlchemy
 
 
-Given solution is a Flask application with SQLite database as backend and implements following functionalities -
+Given solution is a Flask application with SQLite database as backend and it implements following functionalities -
  1. Add an Employee Record
  2. Update details of Employee records
  3. Delete a specific employee
