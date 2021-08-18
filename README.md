@@ -6,7 +6,7 @@ Learning Plan Exercise-(1) Part-(b)
 
 Given solution is a Flask application with SQLite database as backend and it implements following functionalities -
  1. Add an Employee Record
- 2. Update details of Employee records
+ 2. Update details of a specific employee
  3. Delete a specific employee
  
  
