@@ -10,7 +10,6 @@ ROWS_PER_PAGE = 3
 @app.route('/')
 @app.route('/home')
 def home_page():
-	
 	first_name = request.args.get('first_name',"",type=str)
 	last_name = request.args.get('last_name',"",type=str)
 	eid = request.args.get('eid',-1,type=int)
@@ -27,12 +26,10 @@ def home_page():
 		temp_emps = temp_emps.filter_by(last_name=last_name)
 	if eid != -1:
 		temp_emps = temp_emps.filter_by(eid=eid)
-
 	if first_name != "" or last_name != "" or eid != -1:
 		print("FILTER PRESENT")
 		employees = temp_emps.order_by(Employee.first_name, Employee.last_name, Employee.eid).paginate(page=page, per_page=ROWS_PER_PAGE) 
-	
-	
+
 	return render_template('home.html',  search_form=search_form, employees=employees)
 
 @app.route('/add', methods = ['GET', 'POST'])
