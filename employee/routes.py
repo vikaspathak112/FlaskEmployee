@@ -3,7 +3,7 @@ from flask import render_template
 from flask import request
 from flask import url_for
 from flask import redirect
-from employee.forms import AddEmployeeForm, UpdateEmployeeForm, DeleteEmployeeForm
+from employee.forms import AddEmployeeForm, UpdateEmployeeForm, DeleteEmployeeForm, EmployeeSearchForm
 from employee.models import Employee
 
 ROWS_PER_PAGE = 3
@@ -11,21 +11,40 @@ ROWS_PER_PAGE = 3
 @app.route('/home')
 def home_page():
 	
+	first_name = request.args.get('first_name',"",type=str)
+	last_name = request.args.get('last_name',"",type=str)
+	eid = request.args.get('eid',-1,type=int)
 	page = request.args.get('page',1,type=int)
-	print("PAGE REQUESTED: " + str(page))
-	#employees = Employee.query.all()
-	employees = Employee.query.paginate(page=page, per_page=ROWS_PER_PAGE) 
-	return render_template('home.html', employees=employees)
+
+	search_form = EmployeeSearchForm()
+
+	employees = Employee.query.order_by(Employee.first_name, Employee.last_name, Employee.eid).paginate(page=page, per_page=ROWS_PER_PAGE) 
+
+	temp_emps = db.session.query(Employee)
+	if first_name != "":
+		temp_emps = temp_emps.filter_by(first_name=first_name)
+	if last_name != "":
+		temp_emps = temp_emps.filter_by(last_name=last_name)
+	if eid != -1:
+		temp_emps = temp_emps.filter_by(eid=eid)
+
+	if first_name != "" or last_name != "" or eid != -1:
+		print("FILTER PRESENT")
+		employees = temp_emps.order_by(Employee.first_name, Employee.last_name, Employee.eid).paginate(page=page, per_page=ROWS_PER_PAGE) 
+	
+	
+	return render_template('home.html',  search_form=search_form, employees=employees)
 
 @app.route('/add', methods = ['GET', 'POST'])
 def add_page():
 	form = AddEmployeeForm()
 	message = ''
 	if form.validate_on_submit():
-		if Employee.query.filter_by(name=form.name.data, email=form.email.data).first() is not None:
-			message = f'Employee with name {form.name.data} and email {form.email.data} already exists'
+		if Employee.query.filter_by(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data).first() is not None:
+			message = f'Employee with name {form.first_name.data} {form.last_name.data} and email {form.email.data} already exists'
 		else:
-			employee = Employee(name=form.name.data, 
+			employee = Employee(first_name=form.first_name.data,
+							last_name = form.last_name.data, 
 							email=form.email.data,
 							position=form.position.data,
 							dept=form.dept.data,
@@ -49,7 +68,8 @@ def update_page(**kwargs):
 	if request.method == 'GET':
 		pass
 	elif request.method == 'POST':
-		num_rows_updated = Employee.query.filter_by(eid=kwargs['eid']).update({'name':form.name.data,
+		num_rows_updated = Employee.query.filter_by(eid=kwargs['eid']).update({'first_name':form.first_name.data,
+																	'last_name':form.last_name.data,
 																	'email':form.email.data,
 																	'position':form.position.data,
 																	'dept':form.dept.data,

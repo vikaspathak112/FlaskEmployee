@@ -5,13 +5,49 @@
 
 {% block content %}
 	<h3 align = 'center'> Employee Details </h3>
+    <!--
+    <label for="searchForm" class="sr-only">Seach Employees By</label>
+    <form class="form-group" id="searchForm" style="margin-left: 2%">
+            <input type="text" placeholder="First Name"/>
+            <input type="text" placeholder="Last Name"/>
+            <input type="text" placeholder="Employee ID"/>
+    </form>
+    -->
+    <br>
 
+
+        <form method="GET" class="form-inline" style="color:white; ">
+            {{ search_form.hidden_tag() }}
+            <div class="row g-4">
+                <div class="col">      
+                    {{ search_form.first_name(class="form-control", placeholder="First Name") }}
+                </div>
+                
+                <div class="col">
+                    {{ search_form.last_name(class="form-control", placeholder="Last Name") }}
+                </div>
+                
+                <div class="col">
+                    {{ search_form.eid(class="form-control", placeholder="Employee ID") }}
+                </div>
+              
+                <div class="col">
+                    {{ search_form.search(class="btn btn-primary") }}
+                </div>
+            </div>
+        </form>
+
+    <br>
+    {% if search_form %}
+
+    {% endif %}
 	<table class="table table-hover table-dark">
         <thead>
           <tr>
             <!-- Your Columns HERE -->
             <th scope="col">Employee ID</th>
-            <th scope="col">Name</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
             <th scope="col">Email</th>
             <th scope="col">Position</th>
             <th scope="col">Department</th>
@@ -24,7 +60,8 @@
         {% for emp in employees.items %}
           <tr>
             <td>{{ emp.eid }}</td>
-            <td>{{ emp.name }}</td>
+            <td>{{ emp.first_name }}</td>
+            <td>{{ emp.last_name }}</td>
             <td>{{ emp.email }}</td>
             <td>{{ emp.position }}</td>
             <td>{{ emp.dept }}</td>

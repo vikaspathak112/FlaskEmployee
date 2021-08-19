@@ -2,7 +2,8 @@ from employee import db
 
 class Employee(db.Model):
 	eid = db.Column(db.Integer(), primary_key = True)
-	name = db.Column(db.String(length=30), nullable=False)
+	first_name = db.Column(db.String(length=30), nullable=False)
+	last_name = db.Column(db.String(length=30), nullable=False)
 	email = db.Column(db.String(length=50), nullable=False, unique = True)
 	position = db.Column(db.String(length=20), nullable=False)
 	dept = db.Column(db.String(length=50), nullable=False) #consider making dept a different table later on keeping normalisation in mind
